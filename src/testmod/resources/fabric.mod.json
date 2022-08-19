@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "noteblock-api-test-mod",
+  "version": "1.0.0",
+  "name": "NoteBlock API Test Mod",
+  "description": "test mod.",
+  "authors": [
+    "PinkGoosik"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/noteblock-api",
+    "sources": "https://github.com/PinkGoosik/noteblock-api",
+    "issues": "https://github.com/PinkGoosik/noteblock-api/issues"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "test.Main"
+    ]
+  }
+}

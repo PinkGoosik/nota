@@ -1,0 +1,80 @@
+plugins {
+	id "fabric-loom" version "0.12-SNAPSHOT"
+	id "io.github.juuxel.loom-quiltflower" version "1.7.3"
+	id "io.github.p03w.machete" version "1.1.2"
+}
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+sourceSets {
+	testmod {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+}
+
+loom {
+	runs {
+		testmodClient {
+			client()
+			name = "Test Client"
+			runDir = "test"
+			source = sourceSets.testmod
+		}
+		testmodServer {
+			server()
+			name = "Test Server"
+			runDir = "test"
+			source = sourceSets.testmod
+		}
+	}
+}
+
+repositories {
+	maven {
+		url "https://api.modrinth.com/maven"
+		content { includeGroup "maven.modrinth" }
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api}"
+
+	modLocalRuntime "maven.modrinth:ferrite-core:5.0.0-fabric"
+	modLocalRuntime "maven.modrinth:lazydfu:0.1.3"
+	modLocalRuntime "maven.modrinth:starlight:1.1.1+1.19"
+	modLocalRuntime "maven.modrinth:lithium:mc1.19.2-0.8.3"
+
+	testmodImplementation sourceSets.main.output
+}
+
+processResources {
+	inputs.property "version", project.version
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	it.options.release = 17
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+	withSourcesJar()
+	withJavadocJar()
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}" }
+	}
+}

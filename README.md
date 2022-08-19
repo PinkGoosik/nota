@@ -1,6 +1,6 @@
-<img align="right" width="100" src="src/main/resources/assets/noteblock-api/icon.png">
-
 ### NoteBlock API for fabric
+
+<img align="right" width="100" src="src/main/resources/assets/noteblock-api/icon.png">
 
 Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds.
 This port is not complete replica, some features are missing or unfinished.
@@ -50,7 +50,7 @@ Plays song for all added players no matter where they are.
 Song song; // Preloaded song
 RadioSongPlayer rsp = new RadioSongPlayer(song); // Create RadioSongPlayer.
 rsp.setId(new Identifier("example:radio")); // Set unique identifier, not necessary
-rsp.addPlayer(player); // Add player to SongPlayer so he will hear the song.
+rsp.addPlayer(player); // Add player to SongPlayer so they will hear the song.
 rsp.setPlaying(true); // Start RadioSongPlayer playback
 ```
 

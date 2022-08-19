@@ -7,7 +7,6 @@ import com.xxmicloxx.noteblockapi.model.Playlist;
 import com.xxmicloxx.noteblockapi.model.RepeatMode;
 import com.xxmicloxx.noteblockapi.model.Song;
 import com.xxmicloxx.noteblockapi.songplayer.PositionSongPlayer;
-import com.xxmicloxx.noteblockapi.songplayer.SongPlayer;
 import com.xxmicloxx.noteblockapi.utils.NBSDecoder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -29,35 +28,39 @@ public class Main implements ModInitializer {
 
 	public static Song vitality = null;
 	public static Song home = null;
-	public static SongPlayer songPlayer = null;
+	public static Song bad_apple = null;
+	public static Song rush_e = null;
+	public static Song tetris_b_theme = null;
+	public static Song merry_go_round_of_life = null;
+
+	public static PositionSongPlayer songPlayer = null;
 
 	@Override
 	public void onInitialize() {
-		var api = NoteBlockAPI.getAPI();
-
 		try {
 			vitality = NBSDecoder.parse(new File("songs/vitality.nbs"));
 			home = NBSDecoder.parse(new File("songs/home.nbs"));
+
+			bad_apple = NBSDecoder.parse(new File("songs/bad_apple.nbs"));
+			rush_e = NBSDecoder.parse(new File("songs/rush_e.nbs"));
+
+			tetris_b_theme = NBSDecoder.parse(new File("songs/tetris_b_theme.nbs"));
+			merry_go_round_of_life = NBSDecoder.parse(new File("songs/merry_go_round_of_life.nbs"));
 			LOGGER.info("Songs successfully decoded!");
 		}
 		catch(Exception e) {
-			LOGGER.warn("Failed to decode this song due to an exception: " + e);
+			LOGGER.warn("Failed to decode songs due to an exception: " + e);
 		}
-
-//		ServerTickEvents.END_SERVER_TICK.register(server -> {
-//			if(songPlayer != null) {
-//				songPlayer.onTick();
-//			}
-//		});
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dispatcher.register(CommandManager.literal("start-song").executes(context -> {
 				var player = context.getSource().getPlayer();
-				if(player != null) {
+				if(player != null && songPlayer == null) {
 					var world = player.world;
 					if(!world.isClient) {
-						songPlayer = new PositionSongPlayer(new Playlist(vitality, home), world);
-						((PositionSongPlayer) songPlayer).setTargetLocation(player.getBlockPos());
+						songPlayer = new PositionSongPlayer(new Playlist(vitality, home, bad_apple, rush_e, tetris_b_theme, merry_go_round_of_life), world);
+						songPlayer.setId(new Identifier("test:position"));
+						songPlayer.setBlockPos(player.getBlockPos());
 						songPlayer.addPlayer(player);
 						songPlayer.setRepeatMode(RepeatMode.NONE);
 						songPlayer.setPlaying(true);
@@ -74,19 +77,24 @@ public class Main implements ModInitializer {
 		});
 
 		SongStartEvent.EVENT.register(sp -> {
-			for(UUID uuid : sp.getPlayerUUIDs()) {
-				PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
-				if(player != null) {
-					player.sendMessage(Text.of("Song Started Playing: " + sp.getSong().getPath()));
+			if(sp.getId().equals(new Identifier("test:position"))) {
+				for(UUID uuid : sp.getPlayerUUIDs()) {
+					PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					if(player != null) {
+						player.sendMessage(Text.of("Song Started Playing: " + sp.getSong().getTitle()));
+					}
 				}
 			}
+
 		});
 
 		SongEndEvent.EVENT.register(sp -> {
-			for(UUID uuid : sp.getPlayerUUIDs()) {
-				PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
-				if(player != null) {
-					player.sendMessage(Text.of("Song Ended Playing: " + sp.getSong().getPath()));
+			if(sp.getId().equals(new Identifier("test:position"))) {
+				for(UUID uuid : sp.getPlayerUUIDs()) {
+					PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					if(player != null) {
+						player.sendMessage(Text.of("Song Ended Playing: " + sp.getSong().getTitle()));
+					}
 				}
 			}
 		});
@@ -96,9 +104,5 @@ public class Main implements ModInitializer {
 			ModMetadata meta = mod.getMetadata();
 			LOGGER.info(meta.getName() + " " + meta.getVersion().getFriendlyString() + " successfully initialized!");
 		});
-	}
-
-	public static Identifier id(String path) {
-		return new Identifier(MOD_ID, path);
 	}
 }

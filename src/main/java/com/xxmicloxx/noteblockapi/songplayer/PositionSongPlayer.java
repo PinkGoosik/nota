@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * SongPlayer created at a specified Location
+ * SongPlayer created at a specified BlockPos
  */
 public class PositionSongPlayer extends RangeSongPlayer {
 	private BlockPos pos;
@@ -29,14 +29,14 @@ public class PositionSongPlayer extends RangeSongPlayer {
 	 *
 	 * @return {@link BlockPos}
 	 */
-	public BlockPos getTargetLocation() {
-		return pos;
+	public BlockPos getBlockPos() {
+		return this.pos;
 	}
 
 	/**
 	 * Sets location on which is the PositionSongPlayer playing
 	 */
-	public void setTargetLocation(BlockPos pos) {
+	public void setBlockPos(BlockPos pos) {
 		this.pos = pos;
 	}
 
@@ -58,11 +58,9 @@ public class PositionSongPlayer extends RangeSongPlayer {
 			if(isInRange(player)) {
 				this.playerList.put(player.getUuid(), true);
 				this.channelMode.play(player, pos, song, layer, note, volume, !enable10Octave);
-//				Bukkit.getPluginManager().callEvent(new PlayerRangeStateChangeEvent(this, player, true));
 			}
 			else {
 				this.playerList.put(player.getUuid(), false);
-//				Bukkit.getPluginManager().callEvent(new PlayerRangeStateChangeEvent(this, player, false));
 			}
 		}
 	}

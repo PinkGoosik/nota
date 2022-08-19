@@ -52,7 +52,7 @@ public abstract class SongPlayer {
 		this.api = NoteBlockAPI.getAPI();
 		this.song = playlist.get(this.currentSongIndex);
 		this.songDelay = song.getDelay() * 50.0f;
-		schedule((long)this.songDelay);
+		restartTask((long)this.songDelay);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public abstract class SongPlayer {
 					song = playlist.get(currentSongIndex);
 					songDelay = song.getDelay() * 50.0f;
 					this.playSong(currentSongIndex);
-					this.schedule((long)this.songDelay);
+					this.restartTask((long)this.songDelay);
 					task.cancel();
 					return;
 				}
@@ -111,9 +111,13 @@ public abstract class SongPlayer {
 					song = playlist.get(currentSongIndex);
 					songDelay = song.getDelay() * 50.0f;
 					if(repeat.equals(RepeatMode.ALL)) {
-						this.schedule((long)this.songDelay);
+						this.restartTask((long)this.songDelay);
 						task.cancel();
 						return;
+					}
+					else {
+						this.restartTask((long)this.songDelay);
+						task.cancel();
 					}
 				}
 				playing = false;
@@ -135,7 +139,7 @@ public abstract class SongPlayer {
 	/**
 	 * Starts this SongPlayer
 	 */
-	private void schedule(long delay) {
+	private void restartTask(long delay) {
 		this.timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -143,184 +147,6 @@ public abstract class SongPlayer {
 			}
 		}, 0L, delay);
 	}
-
-//	private void start() {
-//		api.doAsync(() -> {
-//			while (!destroyed) {
-//				long startTime = System.currentTimeMillis();
-//				lock.lock();
-//				try {
-//					if (destroyed || NoteBlockAPI.getAPI().isDisabling()){
-//						break;
-//					}
-//
-//					if (playing || fading) {
-//						if (fadeTemp != null){
-//							if (fadeTemp.isDone()) {
-//								fadeTemp = null;
-//								fading = false;
-//								if (!playing) {
-//									//TODO: port SongStoppedEvent to fabric events
-////									SongStoppedEvent event = new SongStoppedEvent(this);
-////									plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//									volume = fadeIn.getFadeTarget();
-//									continue;
-//								}
-//							}else {
-//								int fade = fadeTemp.calculateFade();
-//								if (fade != -1){
-//									volume = (byte) fade;
-//								}
-//							}
-//						} else if (tick < fadeIn.getFadeDuration()){
-//							int fade = fadeIn.calculateFade();
-//							if (fade != -1){
-//								volume = (byte) fade;
-//							}
-//							CallUpdate("fadeDone", fadeIn.getFadeDone());
-//						} else if (tick >= song.getLength() - fadeOut.getFadeDuration()){
-//							int fade = fadeOut.calculateFade();
-//							if (fade != -1){
-//								volume = (byte) fade;
-//							}
-//						}
-//
-//						tick++;
-//						if (tick > song.getLength()) {
-//							tick = -1;
-//							fadeIn.setFadeDone(0);
-//							CallUpdate("fadeDone", fadeIn.getFadeDone());
-//							fadeOut.setFadeDone(0);
-//							volume = fadeIn.getFadeTarget();
-//							if (repeat == RepeatMode.ONE){
-//								//TODO: port SongLoopEvent to fabric events
-////								SongLoopEvent event = new SongLoopEvent(this);
-////								plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//
-////								if (!event.isCancelled()) {
-////									continue;
-////								}
-//							} else {
-//								if (random) {
-//									songQueue.put(song, true);
-//									checkPlaylistQueue();
-//									ArrayList<Song> left = new ArrayList<>();
-//									for (Song s : songQueue.keySet()) {
-//										if (!songQueue.get(s)) {
-//											left.add(s);
-//										}
-//									}
-//
-//									if (left.size() == 0) {
-//										left.addAll(songQueue.keySet());
-//										for (Song s : songQueue.keySet()) {
-//											songQueue.put(s, false);
-//										}
-//										song = left.get(rng.nextInt(left.size()));
-//										actualSong = playlist.getIndex(song);
-//										CallUpdate("song", song);
-//										if (repeat == RepeatMode.ALL) {
-//											// TODO: port SongLoopEvent to fabric events
-////											SongLoopEvent event = new SongLoopEvent(this);
-////											plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-////
-////											if (!event.isCancelled()) {
-////												continue;
-////											}
-//										}
-//									} else {
-//										song = left.get(rng.nextInt(left.size()));
-//										actualSong = playlist.getIndex(song);
-//
-//										CallUpdate("song", song);
-//										// TODO: port SongNextEvent to fabric events
-////										SongNextEvent event = new SongNextEvent(this);
-////										plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//										continue;
-//									}
-//								} else {
-//									if (playlist.hasNext(actualSong)) {
-//										actualSong++;
-//										song = playlist.get(actualSong);
-//										CallUpdate("song", song);
-//										// TODO: port SongNextEvent to fabric events
-////										SongNextEvent event = new SongNextEvent(this);
-////										plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//										continue;
-//									} else {
-//										actualSong = 0;
-//										song = playlist.get(actualSong);
-//										CallUpdate("song", song);
-//										if (repeat == RepeatMode.ALL) {
-//											// TODO: port SongNextEvent to fabric events
-////											SongLoopEvent event = new SongLoopEvent(this);
-////											plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//
-////											if (!event.isCancelled()) {
-////												continue;
-////											}
-//										}
-//									}
-//								}
-//							}
-//							playing = false;
-//							// TODO: port SongEndEvent to fabric events
-////							SongEndEvent event = new SongEndEvent(this);
-////							plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-//							if (autoDestroy) {
-//								destroy();
-//							}
-//							continue;
-//						}
-//						CallUpdate("tick", tick);
-//
-//						api.doSync(() -> {
-//							try {
-//								for (UUID uuid : playerList.keySet()) {
-//									PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
-//									if (player == null) {
-//										// offline...
-//										continue;
-//									}
-//									playTick(player, tick);
-//								}
-//							} catch (Exception e){
-//								//TODO: one logger please
-////								Bukkit.getLogger().severe("An error occurred during the playback of song "
-////										+ (song != null ?
-////										song.getPath() + " (" + song.getAuthor() + " - " + song.getTitle() + ")"
-////										: "null"));
-//								e.printStackTrace();
-//							}
-//						});
-//					}
-//				} catch (Exception e) {
-//					//TODO: and here
-////					Bukkit.getLogger().severe("An error occurred during the playback of song "
-////							+ (song != null ?
-////									song.getPath() + " (" + song.getAuthor() + " - " + song.getTitle() + ")"
-////									: "null"));
-//					e.printStackTrace();
-//				} finally {
-//					lock.unlock();
-//				}
-//
-//				if (destroyed) {
-//					break;
-//				}
-//
-//				long duration = System.currentTimeMillis() - startTime;
-//				float delayMillis = song.getDelay() * 50;
-//				if (duration < delayMillis) {
-//					try {
-//						Thread.sleep((long) (delayMillis - duration));
-//					} catch (InterruptedException e) {
-//						// do nothing
-//					}
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Gets unique id of this SongPlayer
@@ -410,13 +236,6 @@ public abstract class SongPlayer {
 		this.destroyed = true;
 		this.playing = false;
 		this.setTick((short) -1);
-		//TODO: SongDestroyingEvent event probably
-//			SongDestroyingEvent event = new SongDestroyingEvent(this);
-//			plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
-		//Bukkit.getScheduler().cancelTask(threadId);
-//			if (event.isCancelled()) {
-//				return;
-//			}
 	}
 
 	/**
@@ -479,8 +298,6 @@ public abstract class SongPlayer {
 		songs.remove(this);
 		NoteBlockAPI.setSongPlayersByPlayer(playerUuid, songs);
 		if(this.playerList.isEmpty() && this.autoDestroy) {
-//				SongEndEvent event = new SongEndEvent(this);
-//				plugin.doSync(() -> Bukkit.getPluginManager().callEvent(event));
 			destroy();
 		}
 	}

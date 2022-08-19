@@ -31,4 +31,15 @@ bin/
 # fabric
 
 run/
-test/
+
+# sand helps
+test/**/*.json
+test/**/*.txt
+test/**/*.log
+test/config
+test/saves
+test/data
+test/logs
+test/mods
+test/resourcepacks
+

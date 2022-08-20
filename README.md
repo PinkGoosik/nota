@@ -13,11 +13,14 @@ To use Nota in your project add the JitPack repository to your build file and a 
 
 ```gradle
 repositories {
-  maven { url = "https://jitpack.io" }
+	maven {
+		url "https://api.modrinth.com/maven"
+		content { includeGroup "maven.modrinth" }
+	}
 }
 
 dependencies {
-  modImplementation include("com.github.PinkGoosik:nota:VERSION_TAG")
+	modImplementation include("maven.modrinth:nota:VERSION_TAG")
 }
 ```
 

@@ -1,4 +1,4 @@
-package com.xxmicloxx.noteblockapi.model;
+package nota.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

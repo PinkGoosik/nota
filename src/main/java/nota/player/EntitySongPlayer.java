@@ -1,9 +1,12 @@
-package com.xxmicloxx.noteblockapi.songplayer;
+package nota.player;
 
-import com.xxmicloxx.noteblockapi.NoteBlockAPI;
-import com.xxmicloxx.noteblockapi.model.*;
+import nota.Nota;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import nota.model.Layer;
+import nota.model.Note;
+import nota.model.Playlist;
+import nota.model.Song;
 
 @SuppressWarnings("unused")
 public class EntitySongPlayer extends RangeSongPlayer {
@@ -61,7 +64,7 @@ public class EntitySongPlayer extends RangeSongPlayer {
 			return; // not in same world
 		}
 
-		byte playerVolume = NoteBlockAPI.getPlayerVolume(player);
+		byte playerVolume = Nota.getPlayerVolume(player);
 
 		for(Layer layer : song.getLayerHashMap().values()) {
 			Note note = layer.getNote(tick);

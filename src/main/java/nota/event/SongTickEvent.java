@@ -1,6 +1,6 @@
-package com.xxmicloxx.noteblockapi.event;
+package nota.event;
 
-import com.xxmicloxx.noteblockapi.songplayer.SongPlayer;
+import nota.player.SongPlayer;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 

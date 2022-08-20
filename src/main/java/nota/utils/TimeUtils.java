@@ -1,6 +1,6 @@
-package com.xxmicloxx.noteblockapi.utils;
+package nota.utils;
 
-import com.xxmicloxx.noteblockapi.songplayer.SongPlayer;
+import nota.player.SongPlayer;
 
 public class TimeUtils {
 

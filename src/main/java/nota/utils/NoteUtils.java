@@ -1,6 +1,6 @@
-package com.xxmicloxx.noteblockapi.utils;
+package nota.utils;
 
-import com.xxmicloxx.noteblockapi.model.Note;
+import nota.model.Note;
 
 public class NoteUtils {
 
@@ -106,8 +106,7 @@ public class NoteUtils {
 		key = applyPitchToKey(key, pitch);
 
 		if(key < 33) return true;
-		else if(key < 57) return false;
-		else return true;
+		else return key >= 57;
 	}
 
 }

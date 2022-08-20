@@ -1,6 +1,6 @@
-package com.xxmicloxx.noteblockapi.utils;
+package nota.utils;
 
-import com.xxmicloxx.noteblockapi.model.Sound;
+import nota.model.Sound;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.sound.SoundEvent;
 

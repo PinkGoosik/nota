@@ -1,6 +1,6 @@
-### NoteBlock API for fabric
+### Nota
 
-<img align="right" width="100" src="src/main/resources/assets/noteblock-api/icon.png">
+<img align="right" width="100" src="src/main/resources/assets/nota/icon.png">
 
 Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds.
 This port is not complete replica, some features are missing or unfinished.
@@ -9,7 +9,7 @@ You can find original spigot plugin [here](https://www.spigotmc.org/resources/no
 ### Development
 
 #### Adding to your project
-To use NoteBlock API in your project add the JitPack repository to your build file and a mod dependency. Replace the `VERSION_TAG` with the latest version, for example `0.1.0+1.19`
+To use Nota in your project add the JitPack repository to your build file and a mod dependency. Replace the `VERSION_TAG` with the latest version, for example `0.1.0+1.19`
 
 ```gradle
 repositories {
@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-  modImplementation include("com.github.PinkGoosik:noteblock-api:VERSION_TAG")
+  modImplementation include("com.github.PinkGoosik:nota:VERSION_TAG")
 }
 ```
 
@@ -32,8 +32,8 @@ dependencies {
 Song in .nbs format have to be loaded before you can use it.
 
 ```java
-Song song = NBSDecoder.parse(new File("path/to/file"));
-Song song2 = NBSDecoder.parse(new File("path/to/another/file"));
+Song song = NBSDecoder.parse(new File("path/to/song.nbs"));
+Song song2 = NBSDecoder.parse(new File("path/to/another/song.nbs"));
 Playlist playlist = new Playlist(song, song2,...);
 ```
 

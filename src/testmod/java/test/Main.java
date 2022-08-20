@@ -1,13 +1,13 @@
 package test;
 
-import com.xxmicloxx.noteblockapi.NoteBlockAPI;
-import com.xxmicloxx.noteblockapi.event.SongEndEvent;
-import com.xxmicloxx.noteblockapi.event.SongStartEvent;
-import com.xxmicloxx.noteblockapi.model.Playlist;
-import com.xxmicloxx.noteblockapi.model.RepeatMode;
-import com.xxmicloxx.noteblockapi.model.Song;
-import com.xxmicloxx.noteblockapi.songplayer.PositionSongPlayer;
-import com.xxmicloxx.noteblockapi.utils.NBSDecoder;
+import nota.Nota;
+import nota.event.SongEndEvent;
+import nota.event.SongStartEvent;
+import nota.model.Playlist;
+import nota.model.RepeatMode;
+import nota.model.Song;
+import nota.player.PositionSongPlayer;
+import nota.utils.NBSDecoder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.UUID;
 
 public class Main implements ModInitializer {
-	public static final String MOD_ID = "noteblock-api-test-mod";
+	public static final String MOD_ID = "nota-test";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static Song vitality = null;
@@ -79,7 +79,7 @@ public class Main implements ModInitializer {
 		SongStartEvent.EVENT.register(sp -> {
 			if(sp.getId().equals(new Identifier("test:position"))) {
 				for(UUID uuid : sp.getPlayerUUIDs()) {
-					PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
 					if(player != null) {
 						player.sendMessage(Text.of("Song Started Playing: " + sp.getSong().getTitle()));
 					}
@@ -91,7 +91,7 @@ public class Main implements ModInitializer {
 		SongEndEvent.EVENT.register(sp -> {
 			if(sp.getId().equals(new Identifier("test:position"))) {
 				for(UUID uuid : sp.getPlayerUUIDs()) {
-					PlayerEntity player = NoteBlockAPI.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
 					if(player != null) {
 						player.sendMessage(Text.of("Song Ended Playing: " + sp.getSong().getTitle()));
 					}

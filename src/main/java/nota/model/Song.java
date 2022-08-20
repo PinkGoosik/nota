@@ -1,11 +1,13 @@
-package com.xxmicloxx.noteblockapi.model;
+package nota.model;
+
+import nota.utils.NBSDecoder;
 
 import java.io.File;
 import java.util.HashMap;
 
 /**
  * Represents a Note Block Studio project
- * Can be parsed from .nbs file with {@link com.xxmicloxx.noteblockapi.utils.NBSDecoder}
+ * Can be parsed from .nbs file with {@link NBSDecoder}
  */
 public class Song implements Cloneable {
 	HashMap<Integer, Layer> layerHashMap;

@@ -1,9 +1,9 @@
-package com.xxmicloxx.noteblockapi.songplayer;
+package nota.player;
 
 import net.minecraft.entity.player.PlayerEntity;
 
-import com.xxmicloxx.noteblockapi.model.Playlist;
-import com.xxmicloxx.noteblockapi.model.Song;
+import nota.model.Playlist;
+import nota.model.Song;
 
 /**
  * SongPlayer playing only in specified distance

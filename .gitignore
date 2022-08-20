@@ -36,6 +36,7 @@ run/
 test/**/*.json
 test/**/*.txt
 test/**/*.log
+test/.fabric
 test/config
 test/saves
 test/data

@@ -1,4 +1,4 @@
-package com.xxmicloxx.noteblockapi.utils;
+package nota.utils;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import com.xxmicloxx.noteblockapi.model.CustomInstrument;
-import com.xxmicloxx.noteblockapi.model.Layer;
-import com.xxmicloxx.noteblockapi.model.Note;
-import com.xxmicloxx.noteblockapi.model.Song;
+import nota.model.CustomInstrument;
+import nota.model.Layer;
+import nota.model.Note;
+import nota.model.Song;
 
 /**
  * Utils for reading Note Block Studio data

@@ -1,8 +1,10 @@
-package com.xxmicloxx.noteblockapi.model.playmode;
+package nota.model.playmode;
 
-import com.xxmicloxx.noteblockapi.model.*;
-import com.xxmicloxx.noteblockapi.utils.InstrumentUtils;
-import com.xxmicloxx.noteblockapi.utils.NoteUtils;
+import nota.model.Layer;
+import nota.model.Note;
+import nota.model.Song;
+import nota.utils.InstrumentUtils;
+import nota.utils.NoteUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;

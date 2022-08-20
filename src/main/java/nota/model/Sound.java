@@ -1,4 +1,4 @@
-package com.xxmicloxx.noteblockapi.model;
+package nota.model;
 
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;

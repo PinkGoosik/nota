@@ -1,6 +1,6 @@
-package com.xxmicloxx.noteblockapi;
+package nota;
 
-import com.xxmicloxx.noteblockapi.songplayer.SongPlayer;
+import nota.player.SongPlayer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,11 +15,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * Main class, contains methods for playing and adjusting songs for players.
  */
 @SuppressWarnings("unused")
-public class NoteBlockAPI implements ModInitializer {
-	public static final String MOD_ID = "noteblock-api";
-	public static final Logger LOGGER = LoggerFactory.getLogger("NoteBlock API");
+public class Nota implements ModInitializer {
+	public static final String MOD_ID = "nota";
+	public static final Logger LOGGER = LoggerFactory.getLogger("Nota");
 
-	private static NoteBlockAPI instance;
+	private static Nota instance;
 	public MinecraftServer server;
 
 	Map<UUID, ArrayList<SongPlayer>> playingSongs = new ConcurrentHashMap<>();
@@ -138,8 +138,8 @@ public class NoteBlockAPI implements ModInitializer {
 		return this.disabling;
 	}
 
-	public static NoteBlockAPI getAPI() {
-		return NoteBlockAPI.instance;
+	public static Nota getAPI() {
+		return Nota.instance;
 	}
 
 	public MinecraftServer getServer() {
@@ -148,8 +148,8 @@ public class NoteBlockAPI implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		NoteBlockAPI.instance = this;
-		ServerLifecycleEvents.SERVER_STARTED.register(server -> NoteBlockAPI.getAPI().server = server);
-		ServerLifecycleEvents.SERVER_STOPPING.register(server -> NoteBlockAPI.getAPI().disabling = true);
+		Nota.instance = this;
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> Nota.getAPI().server = server);
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> Nota.getAPI().disabling = true);
 	}
 }

@@ -2,14 +2,15 @@
 
 <img align="right" width="100" src="src/main/resources/assets/nota/icon.png">
 
-Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds.
-This port is not complete replica, some features are missing or unfinished.
-You can find original spigot plugin [here](https://www.spigotmc.org/resources/noteblockapi.19287/).
+Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds. 
+This port is not complete replica, some features are missing or unfinished. 
+You can find original spigot plugin [here](https://www.spigotmc.org/resources/noteblockapi.19287/). 
+This library can be used server-side only or in singleplayer.
 
 ### Development
 
 #### Adding to your project
-To use Nota in your project add the JitPack repository to your build file and a mod dependency. Replace the `VERSION_TAG` with the latest version, for example `0.1.0+1.19`
+To use Nota in your project add the Modrinth repository to your build file and a mod dependency. Replace the `VERSION_TAG` with the latest version, for example `0.1.0+1.19`
 
 ```gradle
 repositories {

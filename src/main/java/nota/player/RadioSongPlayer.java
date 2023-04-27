@@ -33,8 +33,8 @@ public class RadioSongPlayer extends SongPlayer {
 			}
 
 			float volume = (layer.getVolume() * (int) this.volume * (int) playerVolume * note.getVelocity()) / 100_00_00_00F;
-
-			channelMode.play(player, new BlockPos(player.getEyePos()), song, layer, note, volume, !enable10Octave);
+			var eyePos = player.getEyePos();
+			channelMode.play(player, new BlockPos((int) eyePos.getX(), (int) eyePos.getY(), (int) eyePos.getZ()), song, layer, note, volume, !enable10Octave);
 		}
 	}
 }
